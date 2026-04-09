@@ -275,6 +275,16 @@ public class Practice {
      * @return the depth of the tree, or 0 if the tree is null or the root is not present in the tree
      */
     public static <T> int maxDepth(Map<T, List<T>> tree, T root) {
-        return 0;
+        if(tree == null || root == null || !tree.containsKey(root)) { return 0; }
+        int treeDepth = 0;
+        List<T> children = tree.get(root);
+        if(children == null || children.isEmpty()) { return 1; }
+        for(T child : children) {
+            int childDepth = 0;
+            if(tree.containsKey(child)) { childDepth = maxDepth(tree, child); }
+            else { childDepth = 1; }
+            if(childDepth > treeDepth) { treeDepth = childDepth; }
+        }
+        return treeDepth + 1;
     }
 }
